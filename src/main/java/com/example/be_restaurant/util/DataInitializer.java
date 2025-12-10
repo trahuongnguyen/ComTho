@@ -31,6 +31,6 @@ public class DataInitializer implements CommandLineRunner {
                     newUser.setStatus(true);
                     return userRepository.save(newUser);
                 });
-        log.info("New User: {}", user);
+        log.info("New User: {}", user.getUsername());
     }
 }

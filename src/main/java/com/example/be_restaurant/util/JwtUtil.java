@@ -3,11 +3,13 @@ package com.example.be_restaurant.util;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
@@ -58,5 +60,17 @@ public class JwtUtil {
             msg = "JWT claims string is empty";
         }
         throw new AccessDeniedException(msg);
+    }
+    public String getCurrentUsername(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        String token = null;
+        String username = null;
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            token = authHeader.substring(7);
+        }
+        if (StringUtils.hasText(token)) {
+            username = getUsernameFromJwtToken(token);
+        }
+        return username;
     }
 }

@@ -7,11 +7,13 @@ import lombok.*;
 
 import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Data
 @Entity
 @Table(name = "user")
 @NoArgsConstructor
+@Getter
+@Setter
 public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,14 +31,14 @@ public class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    private Role role;
+    private Role role = Role.EMPLOYEE;
 
     public enum Role {
         ADMIN,
         EMPLOYEE
     }
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user")
     private Set<Shift> shifts;
 
 }

@@ -1,11 +1,12 @@
 package com.example.be_restaurant.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Data
 @Entity
 @Table(name = "food")
@@ -24,10 +25,11 @@ public class Food extends BaseEntity {
     @Column(name = "can_up_size")
     private Boolean canUpSize;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "food", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "food")
     private Set<OrderDetail> orderDetails;
 }

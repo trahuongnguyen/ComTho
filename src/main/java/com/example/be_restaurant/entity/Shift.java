@@ -1,12 +1,13 @@
 package com.example.be_restaurant.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Data
 @Entity
 @Table(name = "shift")
@@ -25,13 +26,14 @@ public class Shift extends BaseEntity {
     @Column(name = "start_cash")
     private Double startCash;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "shift", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "shift")
     private Set<Invoice> invoices;
 
-    @OneToOne(mappedBy = "shift", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "shift")
     private ShiftSummary shiftSummary;
 }

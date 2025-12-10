@@ -5,7 +5,7 @@ import lombok.*;
 
 import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Data
 @Entity
 @Table(name = "category")
@@ -18,7 +18,7 @@ public class Category extends BaseEntity {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "category")
     private Set<Food> foods;
 
 }

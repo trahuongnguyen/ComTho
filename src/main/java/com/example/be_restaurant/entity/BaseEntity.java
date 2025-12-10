@@ -1,6 +1,7 @@
 package com.example.be_restaurant.entity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-public class BaseEntity {
+@MappedSuperclass
+public abstract class BaseEntity {
     @Column(name = "status")
     private boolean status;
 
@@ -27,8 +29,8 @@ public class BaseEntity {
     private LocalDateTime updatedAt;
 
     @Column(name = "created_by")
-    private User createdBy;
+    private String createdBy;
 
     @Column(name = "updated_by")
-    private User updatedBy;
+    private String updatedBy;
 }
