@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/foods")
-public class FoodController {
+public class FoodController{
     private final FoodService foodService;
     private final JwtUtil jwtUtil;
 
