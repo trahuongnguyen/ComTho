@@ -31,11 +31,11 @@ public class ShiftSummary {
     @Column(name = "status")
     private Boolean status;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "shift_id", nullable = false)
     private Shift shift;
 
-    @OneToMany(mappedBy = "shiftSummary", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "shiftSummary")
     private List<ShiftSoldItem> shiftSoldItems = new ArrayList<>();
 
     @ManyToOne

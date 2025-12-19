@@ -28,7 +28,7 @@ public class FloorServiceImpl implements FloorService {
 
     @Override
     public Floor createFloor(Floor floor, String username) {
-        boolean exists = floorRepository.ExistByNameAndStatus(floor.getName(), true);
+        boolean exists = floorRepository.existsByNameAndStatus(floor.getName(), true);
         if (exists) {
             throw new AlreadyExistException("Exist", "Tầng đã tồn tại: " + floor.getName());
         }

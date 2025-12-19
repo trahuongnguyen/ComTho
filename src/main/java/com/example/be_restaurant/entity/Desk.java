@@ -25,7 +25,4 @@ public class Desk extends BaseEntity {
     @JoinColumn(name = "floor_id")
     @JsonIgnore
     private Floor floor;
-
-    @OneToMany(mappedBy = "desk")
-    private Set<Order> orders;
 }

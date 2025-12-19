@@ -12,5 +12,5 @@ public interface FloorRepository extends JpaRepository<Floor, Long> {
     List<Floor> findByStatus(Boolean status);
     Optional<Floor> findByIdAndStatus(Long id, Boolean status);
     Optional<Floor> findByNameAndStatus(String name, Boolean status);
-    Boolean ExistByNameAndStatus(String name, Boolean status);
+    Boolean existsByNameAndStatus(String name, Boolean status);
 }

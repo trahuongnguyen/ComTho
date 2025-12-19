@@ -3,14 +3,12 @@ package com.example.be_restaurant.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Data
 @Entity
-@Table(name = "invoice")
+@Table(name = "bill")
 @NoArgsConstructor
-public class Invoice extends BaseEntity {
+public class Bill extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,9 +26,13 @@ public class Invoice extends BaseEntity {
     @JoinColumn(name = "order_id", unique = true)
     private Order order;
 
-    @ManyToOne
-    @JoinColumn(name = "payment_id")
+    @Enumerated(EnumType.STRING)
     private Payment payment;
+
+    public enum Payment {
+        CASH,
+        CARD
+    }
 
     @ManyToOne
     @JoinColumn(name = "shift_id")

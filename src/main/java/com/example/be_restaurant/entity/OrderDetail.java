@@ -3,11 +3,14 @@ package com.example.be_restaurant.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Data
 @Entity
 @Table(name = "order_detail")
 @NoArgsConstructor
-public class OrderDetail {
+public class OrderDetail extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,20 +21,19 @@ public class OrderDetail {
     @Column(name = "amount")
     private Double amount;
 
-    @Column(name = "discount")
-    private Double discount;
-
     @Column(name = "note")
     private String note;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "orders_id")
     private Order orders;
 
     @Column(name = "food")
     private String food;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "up_size_option_id")
-    private UpSizeOption upSizeOption;
+    @Column(name = "upsize_option")
+    private boolean upsizeOption;
+
+    @Column(name = "topping")
+    private String topping;
 }

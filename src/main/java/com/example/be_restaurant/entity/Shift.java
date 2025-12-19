@@ -32,7 +32,7 @@ public class Shift extends BaseEntity {
     private User user;
 
     @OneToMany(mappedBy = "shift")
-    private Set<Invoice> invoices;
+    private Set<Bill> bills;
 
     @OneToOne(mappedBy = "shift")
     private ShiftSummary shiftSummary;

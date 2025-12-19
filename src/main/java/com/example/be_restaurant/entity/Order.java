@@ -3,9 +3,10 @@ package com.example.be_restaurant.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Data
@@ -21,20 +22,19 @@ public class Order extends BaseEntity {
     private LocalDateTime startTime;
 
     @Column(name = "end_time", columnDefinition = "TIMESTAMP")
+    @CreationTimestamp
     private LocalDateTime endTime;
 
     @Column(name = "discount")
     private Double discount;
 
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "desk_id")
-    private Desk desk;
+    @Column(name = "desk_id")
+    private Long desk;
 
     @OneToMany(mappedBy = "orders")
-    private Set<OrderDetail> orderDetails;
+    private List<OrderDetail> orderDetails;
 
     @OneToOne(mappedBy = "order")
-    private Invoice invoice;
+    private Bill bill;
 
 }
