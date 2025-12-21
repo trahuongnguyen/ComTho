@@ -31,7 +31,7 @@ public class Order extends BaseEntity {
     @Column(name = "desk_id")
     private Long desk;
 
-    @OneToMany(mappedBy = "orders")
+    @OneToMany(mappedBy = "order")
     private List<OrderDetail> orderDetails;
 
     @OneToOne(mappedBy = "order")

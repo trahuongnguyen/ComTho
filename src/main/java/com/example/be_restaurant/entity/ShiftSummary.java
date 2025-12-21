@@ -28,9 +28,6 @@ public class ShiftSummary {
     @Column(name = "total_order")
     private Integer totalOrder;
 
-    @Column(name = "status")
-    private Boolean status;
-
     @OneToOne
     @JoinColumn(name = "shift_id", nullable = false)
     private Shift shift;

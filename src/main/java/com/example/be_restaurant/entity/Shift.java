@@ -3,6 +3,7 @@ package com.example.be_restaurant.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -17,14 +18,18 @@ public class Shift extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "start_time", columnDefinition = "TIMESTAMP")
+    @Column(name = "start_time")
+    @CreationTimestamp
     private LocalDateTime startTime;
 
-    @Column(name = "end_time", columnDefinition = "TIMESTAMP")
+    @Column(name = "end_time")
     private LocalDateTime endTime;
 
     @Column(name = "start_cash")
     private Double startCash;
+
+    @Column(name = "end_cash")
+    private Double endCash;
 
     @ManyToOne
     @JsonIgnore

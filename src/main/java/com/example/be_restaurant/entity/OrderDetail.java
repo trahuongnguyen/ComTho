@@ -25,8 +25,8 @@ public class OrderDetail extends BaseEntity {
     private String note;
 
     @ManyToOne
-    @JoinColumn(name = "orders_id")
-    private Order orders;
+    @JoinColumn(name = "order_id")
+    private Order order;
 
     @Column(name = "food")
     private String food;
