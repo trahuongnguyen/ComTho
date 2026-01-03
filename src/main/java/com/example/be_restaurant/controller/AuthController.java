@@ -3,6 +3,7 @@ package com.example.be_restaurant.controller;
 import com.example.be_restaurant.bean.request.LoginRequest;
 import com.example.be_restaurant.bean.response.LoginResponse;
 import com.example.be_restaurant.bean.response.UserResponse;
+import com.example.be_restaurant.entity.User;
 import com.example.be_restaurant.service.UserService;
 import com.example.be_restaurant.util.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,6 +16,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.stylesheets.LinkStyle;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -40,6 +44,26 @@ public class AuthController {
         String username = ((org.springframework.security.core.userdetails.User)
                 SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         return ResponseEntity.ok(userService.getUser(username));
+    }
+
+    @GetMapping
+    public List<UserResponse> getAll(){
+        return userService.getListUser();
+    }
+
+    @PostMapping
+    public UserResponse createUser(@RequestBody User user){
+        return userService.createUser(user);
+    }
+
+    @PutMapping("/{id}")
+    public UserResponse updateUser(@PathVariable Long id, @RequestBody User user){
+        return userService.updateUser(id, user);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id){
+        userService.deleteUser(id);
     }
 
 }
