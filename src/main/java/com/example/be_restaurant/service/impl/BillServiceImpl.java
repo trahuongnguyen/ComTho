@@ -43,6 +43,7 @@ import java.util.List;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.io.font.PdfEncodings;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -56,6 +57,7 @@ public class BillServiceImpl implements BillService {
     private final ShiftRepository shiftRepository;
 
     @Override
+    @Transactional
     public Bill createBill(Long shiftId, Long deskId, String payment) {
         List<OrderTemp> orderTemp = orderTempRepository.findAllByDeskId(deskId);
         List<OrderTempRequest> orderTempRequests = orderTemp.stream()
