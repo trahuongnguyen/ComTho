@@ -18,7 +18,7 @@ public class DeskController {
     private final JwtUtil jwtUtil;
 
     @GetMapping("/floor/{id}")
-    public List<Desk> getAllDesks(@PathVariable Long id) {
+    public List<Desk> getAllDesks(@PathVariable(required = false) Long id) {
         return deskService.getAllDesksByFloorId(id);
     }
 

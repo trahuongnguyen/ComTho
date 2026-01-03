@@ -9,5 +9,7 @@ import lombok.Setter;
 @Setter
 public class DeskRequest {
     String name;
+    Integer capacity;
+    String status;
     Long floorId;
 }

@@ -25,6 +25,9 @@ public class Food extends BaseEntity {
     @Column(name = "can_up_size")
     private Boolean canUpSize;
 
+    @Column(name = "up_size_price")
+    private Double upSizePrice;
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "category_id")

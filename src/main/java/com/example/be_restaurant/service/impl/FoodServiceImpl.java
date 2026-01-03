@@ -11,6 +11,7 @@ import com.example.be_restaurant.service.FoodService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,9 @@ public class FoodServiceImpl implements FoodService {
     public List<Food> getAllFoodsByCategory(Long categoryId) {
         Category category = categoryRepository.findByIdAndStatus(categoryId, true)
                 .orElseThrow(() -> new NotFoundException("NotFound", "Không tìm thấy danh mục với id: " + categoryId));
-        return foodRepository.findByCategoryAndStatus(category, true);
+        List<Food> foods = new ArrayList<>();
+        foods = category == null ? foodRepository.findAll() : foodRepository.findByCategoryAndStatus(category, true);
+        return foods;
     }
 
     @Override
@@ -42,6 +45,7 @@ public class FoodServiceImpl implements FoodService {
         newFood.setStatus(true);
         newFood.setCreatedBy(username);
         newFood.setCanUpSize(food.getCanUpSize());
+        newFood.setUpSizePrice(food.getUpSizePrice());
         Category category = categoryRepository.findByIdAndStatus(food.getCategoryId(), true)
                 .orElseThrow(() -> new NotFoundException("NotFound", "Không tìm thấy danh mục với id: " + food.getCategoryId()));
         newFood.setCategory(category);
@@ -60,6 +64,7 @@ public class FoodServiceImpl implements FoodService {
         updatedFood.setName(food.getName());
         updatedFood.setPrice(food.getPrice());
         updatedFood.setCanUpSize(food.getCanUpSize());
+        updatedFood.setUpSizePrice(food.getUpSizePrice());
         updatedFood.setUpdatedBy(username);
         Category category = categoryRepository.findByIdAndStatus(food.getCategoryId(), true)
                 .orElseThrow(() -> new NotFoundException("NotFound", "Không tìm thấy danh mục với id: " + food.getCategoryId()));

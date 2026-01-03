@@ -11,4 +11,5 @@ public class FoodRequest {
     private Double price;
     private Long categoryId;
     private Boolean canUpSize;
+    private Double upSizePrice;
 }

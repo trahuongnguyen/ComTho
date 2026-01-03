@@ -39,7 +39,7 @@ public class ShiftController {
     // 3. Mở ca làm việc mới
     @PostMapping("/start")
     public ResponseEntity<Shift> startShift(
-            @RequestBody Double startCash, HttpServletRequest request) {
+            @RequestParam Double startCash, HttpServletRequest request) {
         String username = jwtUtil.getCurrentUsername(request);
         User user = userRepository.findByUsernameAndStatus(username, true)
                 .orElseThrow(() -> new NotFoundException("User not found", "Không tìm thấy người dùng"));

@@ -21,6 +21,18 @@ public class Desk extends BaseEntity {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "current_status")
+    @Enumerated(EnumType.STRING)
+    private DeskStatus currentStatus;
+
+    public enum DeskStatus {
+        AVAILABLE,
+        ORDERING
+    }
+
+    @Column(name = "capacity")
+    private Integer capacity;
+
     @ManyToOne
     @JoinColumn(name = "floor_id")
     @JsonIgnore

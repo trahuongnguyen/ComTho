@@ -10,6 +10,7 @@ import com.example.be_restaurant.service.DeskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,7 +22,9 @@ public class DeskServiceImpl implements DeskService {
     @Override
     public List<Desk> getAllDesksByFloorId(Long floorId) {
         Floor floor = floorRepository.findByIdAndStatus(floorId, true).orElseThrow(() -> new NotFoundException("Floor", "Không tìm thấy tầng với id: " + floorId));
-        return deskRepository.findByFloorAndStatus(floor, true);
+        List<Desk> desks = new ArrayList<>();
+        desks = floorId == null ? deskRepository.findAll() : deskRepository.findByFloorAndStatus(floor, true);
+        return desks;
     }
 
     @Override
@@ -40,6 +43,8 @@ public class DeskServiceImpl implements DeskService {
         Floor floor = floorRepository.findByIdAndStatus(desk.getFloorId(), true).orElseThrow(() -> new NotFoundException("Floor", "Không tìm thấy tầng với id: " + desk.getFloorId()));
         newDesk.setFloor(floor);
         newDesk.setStatus(true);
+        newDesk.setCurrentStatus(Desk.DeskStatus.AVAILABLE);
+        newDesk.setCapacity(desk.getCapacity());
         newDesk.setCreatedBy(username);
         return deskRepository.save(newDesk);
     }
@@ -57,6 +62,7 @@ public class DeskServiceImpl implements DeskService {
         Floor floor = floorRepository.findByIdAndStatus(desk.getFloorId(), true).orElseThrow(() -> new NotFoundException("Floor", "Không tìm thấy tầng với id: " + desk.getFloorId()));
         updatedDesk.setFloor(floor);
         updatedDesk.setUpdatedBy(username);
+        updatedDesk.setCapacity(desk.getCapacity());
         return deskRepository.save(updatedDesk);
     }
 
