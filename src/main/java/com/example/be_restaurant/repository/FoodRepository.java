@@ -16,4 +16,5 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
     Optional<Food> findByNameAndStatus(String name, boolean status);
     List<Food> findAllByIdInAndStatus(List<Long> ids, boolean status);
     List<Food> findAllByStatus(boolean status);
+    boolean existsByNameAndCategory(String name, Category category);
 }
