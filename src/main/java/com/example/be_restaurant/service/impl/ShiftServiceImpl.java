@@ -99,6 +99,7 @@ public class ShiftServiceImpl implements ShiftService {
         Shift shift = new Shift();
         shift.setUser(user);
         shift.setStartCash(startCash);
+        shift.setCreatedBy(user.getUsername());
         return shiftRepository.save(shift);
     }
 
@@ -112,6 +113,7 @@ public class ShiftServiceImpl implements ShiftService {
         shift.setEndTime(LocalDateTime.now());
         shift.setEndCash(endCash);
         shift.setUser(user);
+        shift.setUpdatedBy(user.getUsername());
 
         // 2. Khởi tạo các biến tổng hợp cho ShiftSummary
         double totalBefore = 0.0;

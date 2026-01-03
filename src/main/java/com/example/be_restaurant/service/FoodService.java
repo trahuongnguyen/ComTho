@@ -13,4 +13,5 @@ public interface FoodService {
     Food createFood(FoodRequest food, String username);
     Food updateFood(Long id, FoodRequest food, String username);
     Food deleteFood(Long id, String username);
+    List<Food> getAll();
 }

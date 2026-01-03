@@ -80,4 +80,9 @@ public class FoodServiceImpl implements FoodService {
         updatedFood.setUpdatedBy(username);
         return foodRepository.save(updatedFood);
     }
+
+    @Override
+    public List<Food> getAll() {
+        return foodRepository.findAllByStatus(true);
+    }
 }

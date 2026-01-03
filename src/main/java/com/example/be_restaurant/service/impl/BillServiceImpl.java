@@ -83,7 +83,7 @@ public class BillServiceImpl implements BillService {
                 orderDetail.setOrder(saveOrder);
                 orderDetail.setAmount(food.map(Food::getPrice).orElse(0.0) +
                         toppingFoods.stream().mapToDouble(Food::getPrice).sum() +
-                        (detailTempRequest.isCanUpSize() ? 10000.0 : 0.0));
+                        (detailTempRequest.isCanUpSize() ? food.map(Food::getUpSizePrice).orElse(0.0) : 0.0));
                 orderDetailRepository.save(orderDetail);
             }
         }

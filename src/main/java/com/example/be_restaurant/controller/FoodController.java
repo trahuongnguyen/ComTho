@@ -17,6 +17,11 @@ public class FoodController{
     private final FoodService foodService;
     private final JwtUtil jwtUtil;
 
+    @GetMapping
+    public List<Food> getAllFoodsWithoutCategory() {
+        return foodService.getAll();
+    }
+
     @GetMapping("/category/{id}")
     public List<Food> getAllFoods(@PathVariable(value = "id", required = false) Long categoryId) {
         return foodService.getAllFoodsByCategory(categoryId);
