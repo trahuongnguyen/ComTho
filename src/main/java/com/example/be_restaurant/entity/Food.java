@@ -23,10 +23,10 @@ public class Food extends BaseEntity {
     private double price;
 
     @Column(name = "can_up_size")
-    private Boolean canUpSize;
+    private Boolean canUpSize = false;
 
     @Column(name = "up_size_price")
-    private Double upSizePrice;
+    private double upSizePrice;
 
     @ManyToOne
     @JsonIgnore

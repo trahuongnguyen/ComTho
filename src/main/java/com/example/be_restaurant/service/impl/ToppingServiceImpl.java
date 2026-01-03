@@ -27,7 +27,7 @@ public class ToppingServiceImpl implements ToppingService {
 
     @Override
     public Topping createTopping(Topping topping, String username) {
-        Topping existingTopping = toppingRepository.findByNameAndStatus(topping.getName(), true).orElseThrow(() -> new NotFoundException("Topping","Topping đã tồn tại với tên: " + topping.getName()));
+        Topping existingTopping = toppingRepository.findByNameAndStatus(topping.getName(), true).orElseThrow(() -> new NotFoundException("Topping","Không tìm thấy topping với tên: " + topping.getName()));
         if (existingTopping != null) {
             throw new AlreadyExistException("Topping", "Topping đã tồn tại với tên: " + topping.getName());
         }
@@ -41,7 +41,7 @@ public class ToppingServiceImpl implements ToppingService {
 
     @Override
     public Topping updateTopping(Long id, Topping topping, String username) {
-        Topping existingTopping = toppingRepository.findByNameAndStatus(topping.getName(), true).orElseThrow(() -> new NotFoundException("Topping","Topping đã tồn tại với tên: " + topping.getName()));
+        Topping existingTopping = toppingRepository.findByNameAndStatus(topping.getName(), true).orElseThrow(() -> new NotFoundException("Topping","Không tìm thấy topping với tên: " + topping.getName()));
         if (existingTopping != null && !existingTopping.getId().equals(id)) {
             throw new AlreadyExistException("Topping", "Topping đã tồn tại với tên: " + topping.getName());
         }

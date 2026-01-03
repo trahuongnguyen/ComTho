@@ -1,6 +1,7 @@
 package com.example.be_restaurant.controller;
 
 import com.example.be_restaurant.bean.request.FoodRequest;
+import com.example.be_restaurant.bean.response.FoodResponse;
 import com.example.be_restaurant.entity.Food;
 import com.example.be_restaurant.service.FoodService;
 import com.example.be_restaurant.util.JwtUtil;
@@ -18,7 +19,7 @@ public class FoodController{
     private final JwtUtil jwtUtil;
 
     @GetMapping
-    public List<Food> getAllFoodsWithoutCategory() {
+    public List<FoodResponse> getAllFoodsWithoutCategory() {
         return foodService.getAll();
     }
 

@@ -1,10 +1,12 @@
 package com.example.be_restaurant.service.impl;
 
 import com.example.be_restaurant.bean.request.FoodRequest;
+import com.example.be_restaurant.bean.response.FoodResponse;
 import com.example.be_restaurant.entity.Category;
 import com.example.be_restaurant.entity.Food;
 import com.example.be_restaurant.exception.AlreadyExistException;
 import com.example.be_restaurant.exception.NotFoundException;
+import com.example.be_restaurant.mapper.FoodMapper;
 import com.example.be_restaurant.repository.CategoryRepository;
 import com.example.be_restaurant.repository.FoodRepository;
 import com.example.be_restaurant.service.FoodService;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class FoodServiceImpl implements FoodService {
@@ -45,7 +49,9 @@ public class FoodServiceImpl implements FoodService {
         newFood.setStatus(true);
         newFood.setCreatedBy(username);
         newFood.setCanUpSize(food.getCanUpSize());
-        newFood.setUpSizePrice(food.getUpSizePrice());
+        newFood.setUpSizePrice(
+                food.getUpSizePrice() != null ? food.getUpSizePrice() : 0
+        );
         Category category = categoryRepository.findByIdAndStatus(food.getCategoryId(), true)
                 .orElseThrow(() -> new NotFoundException("NotFound", "Không tìm thấy danh mục với id: " + food.getCategoryId()));
         newFood.setCategory(category);
@@ -64,7 +70,7 @@ public class FoodServiceImpl implements FoodService {
         updatedFood.setName(food.getName());
         updatedFood.setPrice(food.getPrice());
         updatedFood.setCanUpSize(food.getCanUpSize());
-        updatedFood.setUpSizePrice(food.getUpSizePrice());
+        updatedFood.setUpSizePrice(food.getUpSizePrice() != null ? food.getUpSizePrice() : 0);
         updatedFood.setUpdatedBy(username);
         Category category = categoryRepository.findByIdAndStatus(food.getCategoryId(), true)
                 .orElseThrow(() -> new NotFoundException("NotFound", "Không tìm thấy danh mục với id: " + food.getCategoryId()));
@@ -82,7 +88,10 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public List<Food> getAll() {
-        return foodRepository.findAllByStatus(true);
+    public List<FoodResponse> getAll() {
+        return foodRepository.findAllByStatus(true)
+                .stream()
+                .map(FoodMapper::convertToResponse)
+                .collect(Collectors.toList());
     }
 }
