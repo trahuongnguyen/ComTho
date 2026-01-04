@@ -13,4 +13,6 @@ public interface DeskService {
     Desk createDesk(DeskRequest desk, String username);
     Desk updateDesk(Long id, DeskRequest desk, String username);
     Desk deleteDesk(Long id, String username);
+    List<Desk> getAll();
+    void updateStatus(Long deskId, String status);
 }

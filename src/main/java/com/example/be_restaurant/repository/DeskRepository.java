@@ -14,4 +14,5 @@ public interface DeskRepository extends JpaRepository<Desk, Long> {
     Optional<Desk> findByIdAndStatus(Long id, Boolean status);
     Boolean existsByNameAndStatus(String name, Boolean status);
     Optional<Desk> findByNameAndStatus(String name, Boolean status);
+    List<Desk> findAllByStatus(boolean status);
 }

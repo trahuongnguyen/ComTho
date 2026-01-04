@@ -4,6 +4,7 @@ import com.example.be_restaurant.bean.request.OrderTempRequest;
 import com.example.be_restaurant.entity.OrderTemp;
 import com.example.be_restaurant.mapper.OrderTempMapper;
 import com.example.be_restaurant.service.BillService;
+import com.example.be_restaurant.service.DeskService;
 import com.example.be_restaurant.service.OrderTempService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class OrderTempController {
     private final OrderTempService orderTempService;
     private final BillService billService;
+    private final DeskService deskService;
 
 
     @PostMapping

@@ -1,8 +1,10 @@
 package com.example.be_restaurant.config;
 
 import com.example.be_restaurant.entity.Category;
+import com.example.be_restaurant.entity.Floor;
 import com.example.be_restaurant.entity.Food;
 import com.example.be_restaurant.repository.CategoryRepository;
+import com.example.be_restaurant.repository.FloorRepository;
 import com.example.be_restaurant.repository.FoodRepository;
 import com.example.be_restaurant.repository.UserRepository;
 import com.example.be_restaurant.entity.User;
@@ -22,17 +24,19 @@ public class DataInitializer implements CommandLineRunner {
     private final CategoryRepository categoryRepository;
     private final FoodRepository foodRepository;
     private final PasswordEncoder passwordEncoder;
+    private final FloorRepository floorRepository;
 
     @Override
     public void run(String... args) {
 
-        initSystemAdmin();
+        initUser();
         initCategories();
         initFoods();
+        initFloor();
     }
 
     // ================= USER =================
-    private void initSystemAdmin() {
+    private void initUser() {
         userRepository.findByUsernameAndStatus("systemAdmin", true)
                 .orElseGet(() -> {
                     User user = new User();
@@ -44,6 +48,18 @@ public class DataInitializer implements CommandLineRunner {
                     user.setCreatedAt(LocalDateTime.now());
                     user.setUpdatedAt(LocalDateTime.now());
                     return userRepository.save(user);
+                });
+
+    }
+
+    // ================= FLOOR =================
+    private void initFloor(){
+        floorRepository.findByNameAndStatus("Tang 1", true)
+                .orElseGet(() -> {
+                    Floor floor = new Floor();
+                    floor.setName("Tang 1");
+                    floor.setStatus(true);
+                    return floorRepository.save(floor);
                 });
     }
 

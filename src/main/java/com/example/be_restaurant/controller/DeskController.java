@@ -17,6 +17,11 @@ public class DeskController {
     private final DeskService deskService;
     private final JwtUtil jwtUtil;
 
+    @GetMapping
+    public List<Desk> getAll(){
+        return deskService.getAll();
+    }
+
     @GetMapping("/floor/{id}")
     public List<Desk> getAllDesks(@PathVariable(required = false) Long id) {
         return deskService.getAllDesksByFloorId(id);
@@ -43,5 +48,10 @@ public class DeskController {
     public Desk deleteDesk(@PathVariable Long id, HttpServletRequest request) {
         String username = jwtUtil.getCurrentUsername(request);
         return deskService.deleteDesk(id, username);
+    }
+
+    @PutMapping("/status/{id}")
+    public void updateStatus(@PathVariable Long id, @RequestParam String status){
+        deskService.updateStatus(id, status);
     }
 }

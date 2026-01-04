@@ -74,4 +74,21 @@ public class DeskServiceImpl implements DeskService {
         existingDesk.setUpdatedBy(username);
         return deskRepository.save(existingDesk);
     }
+
+    @Override
+    public List<Desk> getAll() {
+        return deskRepository.findAllByStatus(true);
+    }
+
+    @Override
+    public void updateStatus(Long deskId, String status) {
+        Desk existingDesk = deskRepository.findByIdAndStatus(deskId, true)
+                .orElseThrow(() -> new NotFoundException("Desk", "Không tìm thấy bàn với id: " + deskId));
+        if (status.equalsIgnoreCase("ordering")){
+            existingDesk.setCurrentStatus(Desk.DeskStatus.ORDERING);
+        }else{
+            existingDesk.setCurrentStatus(Desk.DeskStatus.AVAILABLE);
+        }
+        deskRepository.save(existingDesk);
+    }
 }

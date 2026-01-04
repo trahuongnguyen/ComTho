@@ -29,7 +29,7 @@ public class OrderTemp extends BaseEntity {
     @Column(name = "start_time")
     private LocalDateTime startTime;
 
-    @Column(name = "orders")
+    @Column(name = "orders", columnDefinition = "TEXT")
     private String orders;
 
 }

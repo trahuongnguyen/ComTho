@@ -5,15 +5,18 @@ import com.example.be_restaurant.service.CategoryService;
 import com.example.be_restaurant.util.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.Console;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/categories")
+@Slf4j
 public class CategoryController{
     private final CategoryService categoryService;
     private final JwtUtil jwtUtil;
