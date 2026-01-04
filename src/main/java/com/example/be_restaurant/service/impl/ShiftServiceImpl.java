@@ -99,6 +99,7 @@ public class ShiftServiceImpl implements ShiftService {
         Shift shift = new Shift();
         shift.setUser(user);
         shift.setStartCash(startCash);
+        shift.setEndCash(startCash);
         shift.setCreatedBy(user.getUsername());
         return shiftRepository.save(shift);
     }
