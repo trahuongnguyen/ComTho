@@ -58,7 +58,7 @@ public class BillServiceImpl implements BillService {
 
     @Override
     @Transactional
-    public Bill createBill(Long shiftId, Long deskId, String payment) {
+    public Bill createBill(Long shiftId, Long deskId, String payment, Double discount) {
         List<OrderTemp> orderTemp = orderTempRepository.findAllByDeskId(deskId);
         List<OrderTempRequest> orderTempRequests = orderTemp.stream()
                 .map(OrderTempMapper::toRequest)
@@ -69,9 +69,7 @@ public class BillServiceImpl implements BillService {
         Order order = new Order();
         order.setStartTime(orderTempRequests.get(0).getStartTime());
         order.setDesk(deskId);
-        order.setDiscount(orderTempRequests.stream()
-                .mapToDouble(OrderTempRequest::getDiscount)
-                .sum());
+        order.setDiscount(discount);
         Order saveOrder = orderRepository.save(order);
         for (OrderTempRequest orderTempRequest : orderTempRequests) {
             for (OrderDetailTempRequest detailTempRequest : orderTempRequest.getOrderDetails()) {

@@ -88,8 +88,44 @@ public class ShiftServiceImpl implements ShiftService {
 
         // Map sản phẩm, khuyến mãi, thanh toán... (giữ nguyên logic cũ)
         response.setProducts(new ArrayList<>(productMap.values()));
+        Map<String, ShiftDetailResponse.PromotionSummary> promotionMap = new HashMap<>();
 
-        // ... (Phần code promotions và payments giữ nguyên)
+        for (Bill bill : bills) {
+            if (bill.getTotalDiscount() != null && bill.getTotalDiscount() > 0) {
+
+                String promoName = "Khuyến mãi"; // nếu sau này có bảng promotion thì đổi
+                ShiftDetailResponse.PromotionSummary promo =
+                        promotionMap.getOrDefault(promoName,
+                                new ShiftDetailResponse.PromotionSummary(promoName, 0, 0.0));
+
+                promo.setQuantity(promo.getQuantity() + 1);
+                promo.setTotal(promo.getTotal() + bill.getTotalDiscount());
+
+                promotionMap.put(promoName, promo);
+            }
+        }
+        response.setPromotions(new ArrayList<>(promotionMap.values()));
+
+        Map<String, ShiftDetailResponse.PaymentSummary> paymentMap = new HashMap<>();
+
+        for (Bill bill : bills) {
+            if (bill.getPayment() != null) {
+                String method = bill.getPayment().name();
+
+                ShiftDetailResponse.PaymentSummary payment =
+                        paymentMap.getOrDefault(method,
+                                new ShiftDetailResponse.PaymentSummary(method, 0, 0.0));
+
+                payment.setCount(payment.getCount() + 1);
+                payment.setTotal(payment.getTotal() +
+                        (bill.getTotalAmount() != null ? bill.getTotalAmount() : 0));
+
+                paymentMap.put(method, payment);
+            }
+        }
+
+        response.setPayments(new ArrayList<>(paymentMap.values()));
+
 
         return response;
     }

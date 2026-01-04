@@ -7,10 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,9 +19,10 @@ public class BillController {
     public ResponseEntity<byte[]> createBill(
             @PathVariable Long shiftId,
             @PathVariable Long deskId,
-            @PathVariable String payment) {
+            @PathVariable String payment,
+            @RequestParam Double discount) {
 
-        Bill bill = billService.createBill(shiftId, deskId, payment);
+        Bill bill = billService.createBill(shiftId, deskId, payment, discount);
         byte[] pdfBytes = billService.generatePaymentInvoicePdf(bill.getId());
 
         return ResponseEntity.ok()

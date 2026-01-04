@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface BillService {
-    Bill createBill(Long shiftId, Long deskId, String payment);
+    Bill createBill(Long shiftId, Long deskId, String payment, Double discount);
     byte[] generateKitchenInvoicePdf(OrderTempRequest orderTempRequest);
     byte[] generatePaymentInvoicePdf(Long billId);
 }
