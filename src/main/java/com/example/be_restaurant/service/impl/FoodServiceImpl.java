@@ -91,6 +91,7 @@ public class FoodServiceImpl implements FoodService {
     public List<FoodResponse> getAll() {
         return foodRepository.findAllByStatus(true)
                 .stream()
+                .filter(c -> c.getCategory().isStatus())
                 .map(FoodMapper::convertToResponse)
                 .collect(Collectors.toList());
     }

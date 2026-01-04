@@ -42,9 +42,39 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/login").permitAll()
-                        .requestMatchers("/api/auth/profile").permitAll()
-                        .requestMatchers("/api/auth").hasRole("ADMIN")
+                        // auth
+                        .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/auth/profile").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/auth").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/auth").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/auth/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/auth/**").hasRole("ADMIN")
+                        // bill
+                        .requestMatchers(HttpMethod.POST, "/api/bill/**").permitAll()
+                        // category
+                        .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/categories").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/categories/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/categories/**").hasRole("ADMIN")
+                        // desk
+                        .requestMatchers(HttpMethod.GET, "/api/desks/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/desks/status/**").permitAll()
+                        .requestMatchers("/api/desks/**").hasRole("ADMIN")
+                        // floor
+                        .requestMatchers(HttpMethod.GET, "/api/floors/**").permitAll()
+                        .requestMatchers("/api/floors/**").hasRole("ADMIN")
+                        // food
+                        .requestMatchers(HttpMethod.GET, "/api/foods/**").permitAll()
+                        .requestMatchers("/api/foods/**").hasRole("ADMIN")
+                        // ordertemp
+                        .requestMatchers("/api/orderTemp/**").permitAll()
+                        // shift
+                        .requestMatchers(HttpMethod.GET, "/api/shift").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/shift/*/detail").hasAnyRole("ADMIN")
+                        .requestMatchers("/api/shift/**").permitAll()
+                        // topping
+                        .requestMatchers(HttpMethod.GET, "/api/toppings/**").permitAll()
+                        .requestMatchers("/api/toppings/**").hasRole("ADMIN")
                         .anyRequest().authenticated());
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

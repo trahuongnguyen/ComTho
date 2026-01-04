@@ -1,4 +1,4 @@
-package com.example.be_restaurant.config;
+package com.example.be_restaurant.util;
 
 import com.example.be_restaurant.entity.Category;
 import com.example.be_restaurant.entity.Floor;
@@ -37,6 +37,7 @@ public class DataInitializer implements CommandLineRunner {
 
     // ================= USER =================
     private void initUser() {
+        // ===== ADMIN =====
         userRepository.findByUsernameAndStatus("systemAdmin", true)
                 .orElseGet(() -> {
                     User user = new User();
@@ -44,6 +45,20 @@ public class DataInitializer implements CommandLineRunner {
                     user.setPassword(passwordEncoder.encode("systemAdmin"));
                     user.setRole(User.Role.ADMIN);
                     user.setFullName("System Admin");
+                    user.setStatus(true);
+                    user.setCreatedAt(LocalDateTime.now());
+                    user.setUpdatedAt(LocalDateTime.now());
+                    return userRepository.save(user);
+                });
+
+        // ===== EMPLOYEE =====
+        userRepository.findByUsernameAndStatus("employee", true)
+                .orElseGet(() -> {
+                    User user = new User();
+                    user.setUsername("employee");
+                    user.setPassword(passwordEncoder.encode("employee"));
+                    user.setRole(User.Role.EMPLOYEE);
+                    user.setFullName("Employee");
                     user.setStatus(true);
                     user.setCreatedAt(LocalDateTime.now());
                     user.setUpdatedAt(LocalDateTime.now());
