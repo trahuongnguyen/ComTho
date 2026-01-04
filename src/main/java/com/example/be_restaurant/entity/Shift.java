@@ -40,5 +40,6 @@ public class Shift extends BaseEntity {
     private Set<Bill> bills;
 
     @OneToOne(mappedBy = "shift")
+    @JsonIgnore
     private ShiftSummary shiftSummary;
 }

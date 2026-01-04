@@ -1,5 +1,6 @@
 package com.example.be_restaurant.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,6 +30,7 @@ public class ShiftSummary {
     private Integer totalOrder;
 
     @OneToOne
+    @JsonIgnore
     @JoinColumn(name = "shift_id", nullable = false)
     private Shift shift;
 

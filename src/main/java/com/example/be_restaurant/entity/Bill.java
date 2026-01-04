@@ -1,5 +1,6 @@
 package com.example.be_restaurant.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +24,7 @@ public class Bill extends BaseEntity {
     private Double totalAmount;
 
     @OneToOne
+    @JsonIgnore
     @JoinColumn(name = "order_id", unique = true)
     private Order order;
 
@@ -35,6 +37,7 @@ public class Bill extends BaseEntity {
     }
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "shift_id")
     private Shift shift;
 }
