@@ -43,6 +43,14 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         // auth
+                        .requestMatchers(
+                                "/",
+                                "/index.html",
+                                "/favicon.ico",
+                                "/assets/**",
+                                "/fonts/**",
+                                "/robots.txt",
+                                "/placeholder.svg").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/auth/profile").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/auth").hasRole("ADMIN")

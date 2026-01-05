@@ -15,4 +15,5 @@ public interface DeskRepository extends JpaRepository<Desk, Long> {
     Boolean existsByNameAndStatus(String name, Boolean status);
     Optional<Desk> findByNameAndStatus(String name, Boolean status);
     List<Desk> findAllByStatus(boolean status);
+    boolean existsByNameAndFloorAndStatus(String name, Floor floor, boolean status);
 }

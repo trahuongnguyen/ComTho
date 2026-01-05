@@ -1,13 +1,7 @@
 package com.example.be_restaurant.util;
 
-import com.example.be_restaurant.entity.Category;
-import com.example.be_restaurant.entity.Floor;
-import com.example.be_restaurant.entity.Food;
-import com.example.be_restaurant.repository.CategoryRepository;
-import com.example.be_restaurant.repository.FloorRepository;
-import com.example.be_restaurant.repository.FoodRepository;
-import com.example.be_restaurant.repository.UserRepository;
-import com.example.be_restaurant.entity.User;
+import com.example.be_restaurant.entity.*;
+import com.example.be_restaurant.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +19,7 @@ public class DataInitializer implements CommandLineRunner {
     private final FoodRepository foodRepository;
     private final PasswordEncoder passwordEncoder;
     private final FloorRepository floorRepository;
+    private final DeskRepository deskRepository;
 
     @Override
     public void run(String... args) {
@@ -32,7 +27,7 @@ public class DataInitializer implements CommandLineRunner {
         initUser();
         initCategories();
         initFoods();
-        initFloor();
+        initFloorAndDesk();
     }
 
     // ================= USER =================
@@ -67,15 +62,57 @@ public class DataInitializer implements CommandLineRunner {
 
     }
 
-    // ================= FLOOR =================
-    private void initFloor(){
-        floorRepository.findByNameAndStatus("Tang 1", true)
+    // ================= FLOOR + DESK =================
+    private void initFloorAndDesk() {
+
+        Floor mangVe = createFloorIfNotExists("MANG VỀ");
+        Floor tang1  = createFloorIfNotExists("TẦNG 1");
+        Floor tang2  = createFloorIfNotExists("TẦNG 2");
+
+        // ---- MANG VỀ: Mang về 01 -> 10 ----
+        for (int i = 1; i <= 10; i++) {
+            createDeskIfNotExists(String.format("Mang về %02d", i), mangVe);
+        }
+
+        // ---- TẦNG 1: Bàn 1A -> 5C ----
+        for (int i = 1; i <= 5; i++) {
+            for (char c = 'A'; c <= 'C'; c++) {
+                createDeskIfNotExists("Bàn " + i + c, tang1);
+            }
+        }
+
+        // ---- TẦNG 2: Bàn 6A -> 15C ----
+        for (int i = 6; i <= 15; i++) {
+            for (char c = 'A'; c <= 'C'; c++) {
+                createDeskIfNotExists("Bàn " + i + c, tang2);
+            }
+        }
+    }
+
+    private Floor createFloorIfNotExists(String name) {
+        return floorRepository.findByNameAndStatus(name, true)
                 .orElseGet(() -> {
                     Floor floor = new Floor();
-                    floor.setName("Tang 1");
+                    floor.setName(name);
                     floor.setStatus(true);
+                    floor.setCreatedAt(LocalDateTime.now());
+                    floor.setUpdatedAt(LocalDateTime.now());
                     return floorRepository.save(floor);
                 });
+    }
+
+    private void createDeskIfNotExists(String name, Floor floor) {
+        if (!deskRepository.existsByNameAndFloorAndStatus(name, floor, true)) {
+            Desk desk = new Desk();
+            desk.setName(name);
+            desk.setFloor(floor);
+            desk.setCapacity(4);
+            desk.setCurrentStatus(Desk.DeskStatus.AVAILABLE);
+            desk.setStatus(true);
+            desk.setCreatedAt(LocalDateTime.now());
+            desk.setUpdatedAt(LocalDateTime.now());
+            deskRepository.save(desk);
+        }
     }
 
     // ================= CATEGORY =================
