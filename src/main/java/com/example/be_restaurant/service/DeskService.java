@@ -1,6 +1,7 @@
 package com.example.be_restaurant.service;
 
 import com.example.be_restaurant.bean.request.DeskRequest;
+import com.example.be_restaurant.bean.response.DeskResponse;
 import com.example.be_restaurant.entity.Desk;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,6 @@ public interface DeskService {
     Desk createDesk(DeskRequest desk, String username);
     Desk updateDesk(Long id, DeskRequest desk, String username);
     Desk deleteDesk(Long id, String username);
-    List<Desk> getAll();
+    List<DeskResponse> getAll();
     void updateStatus(Long deskId, String status);
 }

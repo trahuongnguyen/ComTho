@@ -1,6 +1,7 @@
 package com.example.be_restaurant.controller;
 
 import com.example.be_restaurant.bean.request.DeskRequest;
+import com.example.be_restaurant.bean.response.DeskResponse;
 import com.example.be_restaurant.entity.Desk;
 import com.example.be_restaurant.service.DeskService;
 import com.example.be_restaurant.util.JwtUtil;
@@ -18,7 +19,7 @@ public class DeskController {
     private final JwtUtil jwtUtil;
 
     @GetMapping
-    public List<Desk> getAll(){
+    public List<DeskResponse> getAll(){
         return deskService.getAll();
     }
 

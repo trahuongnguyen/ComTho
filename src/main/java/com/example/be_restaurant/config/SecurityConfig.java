@@ -51,6 +51,7 @@ public class SecurityConfig {
                                 "/fonts/**",
                                 "/robots.txt",
                                 "/placeholder.svg").permitAll()
+                        .requestMatchers("/error").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/auth/profile").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/auth").hasRole("ADMIN")

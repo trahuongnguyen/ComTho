@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class IncorrectEmailOrPassword extends RuntimeException {
-    private final String key;
-    private final String message;
+    private  String key;
+    private  String message;
 }

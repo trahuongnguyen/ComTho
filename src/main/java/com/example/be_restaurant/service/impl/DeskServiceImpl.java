@@ -1,9 +1,11 @@
 package com.example.be_restaurant.service.impl;
 
 import com.example.be_restaurant.bean.request.DeskRequest;
+import com.example.be_restaurant.bean.response.DeskResponse;
 import com.example.be_restaurant.entity.Desk;
 import com.example.be_restaurant.entity.Floor;
 import com.example.be_restaurant.exception.NotFoundException;
+import com.example.be_restaurant.mapper.DeskMapper;
 import com.example.be_restaurant.repository.DeskRepository;
 import com.example.be_restaurant.repository.FloorRepository;
 import com.example.be_restaurant.service.DeskService;
@@ -76,8 +78,8 @@ public class DeskServiceImpl implements DeskService {
     }
 
     @Override
-    public List<Desk> getAll() {
-        return deskRepository.findAllByStatus(true);
+    public List<DeskResponse> getAll() {
+        return deskRepository.findAllByStatus(true).stream().map(DeskMapper::toDeskResponse).toList();
     }
 
     @Override

@@ -6,6 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
@@ -16,18 +17,17 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     //private final ObjectMapper mapper;
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.FORBIDDEN, "token", authException.getMessage());
-        response.setStatus(HttpStatus.FORBIDDEN.value());
+        log.warn("JwtAuthenticationEntryPoint.commence invoked for path={} message={}", request.getRequestURI(), authException.getMessage());
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.UNAUTHORIZED, "token", authException.getMessage());
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType("text/json");
         response.setCharacterEncoding("UTF-8");
-        ResponseEntity<ErrorResponse> responseEntity = ResponseEntity.ofNullable(errorResponse);
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(response.getWriter(), responseEntity);
-        response.getWriter().write(mapper.writeValueAsString(errorResponse));
+        new ObjectMapper().writeValue(response.getWriter(), errorResponse);
     }
 }

@@ -17,13 +17,13 @@ import java.io.IOException;
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.UNAUTHORIZED, "token", accessDeniedException.getMessage());
-        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.FORBIDDEN, "token", accessDeniedException.getMessage());
+        response.setStatus(HttpStatus.FORBIDDEN.value());
         response.setContentType("text/json");
         response.setCharacterEncoding("UTF-8");
-        ResponseEntity<ErrorResponse> responseEntity = ResponseEntity.ofNullable(errorResponse);
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(response.getWriter(), responseEntity);
-        response.getWriter().write(mapper.writeValueAsString(errorResponse));
+//        ResponseEntity<ErrorResponse> responseEntity = ResponseEntity.ofNullable(errorResponse);
+//        ObjectMapper mapper = new ObjectMapper();
+//        mapper.writeValue(response.getWriter(), responseEntity);
+        new ObjectMapper().writeValue(response.getWriter(), errorResponse);
     }
 }

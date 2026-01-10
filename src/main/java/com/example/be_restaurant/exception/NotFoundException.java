@@ -1,13 +1,13 @@
 package com.example.be_restaurant.exception;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
+@AllArgsConstructor
 public class NotFoundException extends RuntimeException {
-    private final String key;
-
-    public NotFoundException(String key, String message) {
-        super(message);
-        this.key = key;
-    }
+    private String key;
+    private String message;
 }

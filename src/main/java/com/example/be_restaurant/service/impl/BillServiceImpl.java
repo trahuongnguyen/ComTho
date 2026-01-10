@@ -60,6 +60,10 @@ public class BillServiceImpl implements BillService {
     @Transactional
     public Bill createBill(Long shiftId, Long deskId, String payment, Double discount) {
         List<OrderTemp> orderTemp = orderTempRepository.findAllByDeskId(deskId);
+        if (orderTemp.isEmpty()){
+            throw new NotFoundException("OrderTempNotFound",
+                    "Không tìm thấy order temp cho bàn id = " + deskId);
+        }
         List<OrderTempRequest> orderTempRequests = orderTemp.stream()
                 .map(OrderTempMapper::toRequest)
                 .toList();
